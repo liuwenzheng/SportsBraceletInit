@@ -100,6 +100,10 @@ public class BTConstants {
 	public static final byte HEADER_SYNSLEEP = 0x14;
 	// 获取数据
 	public static final byte HEADER_GETDATA = 0x16;
+	// 获取SN
+	public static final byte HEADER_GETSN = (byte) 0x97;
+	// 设置数据
+	public static final byte HEADER_SETSN = 0x20;
 	// 初始化触摸按键
 	public static final byte HEADER_SYNTOUCHBUTTON = 0x1B;
 	// 休眠模式

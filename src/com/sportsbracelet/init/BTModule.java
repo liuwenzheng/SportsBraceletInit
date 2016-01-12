@@ -121,6 +121,7 @@ public class BTModule {
 		byteArray[0] = BTConstants.HEADER_SLEEP;
 		writeCharacteristicData(mBluetoothGatt, byteArray);
 	}
+
 	/**
 	 * 获取SN
 	 * 
@@ -128,11 +129,29 @@ public class BTModule {
 	 * 
 	 */
 	public static void getSNData(BluetoothGatt mBluetoothGatt) {
-		byte[] byteArray = new byte[2];
-		byteArray[0] = BTConstants.HEADER_GETDATA;
-		byteArray[1] = 0x04;
+		byte[] byteArray = new byte[1];
+		byteArray[0] = BTConstants.HEADER_GETSN;
+		// byteArray[1] = 0x04;
 		writeCharacteristicData(mBluetoothGatt, byteArray);
 	}
+
+	/**
+	 * 设置SN
+	 * 
+	 * @param mBluetoothGatt
+	 * @param snStr
+	 */
+	public static void setSNData(BluetoothGatt mBluetoothGatt, String snStr) {
+		byte[] byteArray = new byte[17];
+		byteArray[0] = BTConstants.HEADER_SETSN;
+		String[] sn = snStr.split(" ");
+		for (int i = 0; i < sn.length; i++) {
+			byteArray[i + 1] = Utils.hexStr2ByteArray(sn[i])[0];
+		}
+		// byteArray[1] = 0x04;
+		writeCharacteristicData(mBluetoothGatt, byteArray);
+	}
+
 	/**
 	 * 将所有手环特征设置为notify方式
 	 * 

@@ -305,6 +305,13 @@ public class BTService extends Service implements LeScanCallback {
 	}
 
 	/**
+	 * 设置SN
+	 */
+	public void setSNData(String snStr) {
+		BTModule.setSNData(mBluetoothGatt, snStr);
+	}
+
+	/**
 	 * 是否连接手环
 	 * 
 	 * @return

@@ -14,6 +14,7 @@
     <string name="sync_time_success">同步时间成功</string>
     <string name="sync_touch_success">复位按键成功</string>
     <string name="sync_sleep_success">设置休眠成功</string>
+    <string name="sync_sn_success">烧码成功</string>
     <string name="read_sn_back">读取SN返回值为：%1$s</string>
     <string name="write_sn_back">发送SN返回值为：%1$s</string>
 

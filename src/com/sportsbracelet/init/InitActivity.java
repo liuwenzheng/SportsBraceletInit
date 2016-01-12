@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -137,7 +138,10 @@ public class InitActivity extends Activity implements OnClickListener,
 			isDeviceConnected();
 			break;
 		case R.id.btn_write_sn:
-
+			if (TextUtils.isEmpty(et_sn.getText().toString())) {
+				return;
+			}
+			mBtService.setSNData(et_sn.getText().toString());
 			break;
 		case R.id.btn_read_sn:
 			if (mSelectDevice != null) {
@@ -261,6 +265,9 @@ public class InitActivity extends Activity implements OnClickListener,
 								devices.size()));
 						mAdapter.notifyDataSetChanged();
 						isDeviceConnected();
+					} else if (ack == BTConstants.HEADER_SETSN) {
+						ToastUtils.showToast(InitActivity.this,
+								R.string.sync_sn_success);
 					}
 				}
 				if (BTConstants.ACTION_REFRESH_SN.equals(intent.getAction())) {
