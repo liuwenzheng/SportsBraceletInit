@@ -240,7 +240,7 @@ public class BTService extends Service implements LeScanCallback {
 			mHandler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					mBluetoothGatt = device.connectGatt(BTService.this, false,
+					mBluetoothGatt = device.connectGatt(BTService.this, true,
 							mGattCallback);
 				}
 			}, 1000);

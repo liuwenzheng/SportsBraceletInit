@@ -114,6 +114,11 @@ public class InitActivity extends Activity implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_scan:
+			// 开启蓝牙
+			if (!BTModule.isBluetoothOpen()) {
+				BTModule.openBluetooth(InitActivity.this);
+				return;
+			}
 			devices.clear();
 			mPosition = -1;
 			mSelectDevice = null;
