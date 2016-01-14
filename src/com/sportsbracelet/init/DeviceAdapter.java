@@ -52,6 +52,8 @@ public class DeviceAdapter extends BaseAdapter {
 					.findViewById(R.id.tv_device_address);
 			holder.tv_device_status = (TextView) convertView
 					.findViewById(R.id.tv_device_status);
+			holder.tv_device_rssi = (TextView) convertView
+					.findViewById(R.id.tv_device_rssi);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -63,6 +65,7 @@ public class DeviceAdapter extends BaseAdapter {
 		} else {
 			holder.tv_device_status.setText("");
 		}
+		holder.tv_device_rssi.setText(device.rssi);
 		return convertView;
 	}
 
@@ -70,5 +73,6 @@ public class DeviceAdapter extends BaseAdapter {
 		TextView tv_device_name;
 		TextView tv_device_address;
 		TextView tv_device_status;
+		TextView tv_device_rssi;
 	}
 }

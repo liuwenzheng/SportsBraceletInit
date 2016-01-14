@@ -240,7 +240,7 @@ public class BTService extends Service implements LeScanCallback {
 			mHandler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					mBluetoothGatt = device.connectGatt(BTService.this, true,
+					mBluetoothGatt = device.connectGatt(BTService.this, false,
 							mGattCallback);
 				}
 			}, 1000);
@@ -255,6 +255,7 @@ public class BTService extends Service implements LeScanCallback {
 		if (mBluetoothGatt != null) {
 			mBluetoothGatt.close();
 			mBluetoothGatt = null;
+			BTModule.mNotifyCharacteristic = null;
 		}
 	}
 
@@ -268,6 +269,7 @@ public class BTService extends Service implements LeScanCallback {
 			Device bleDevice = new Device();
 			bleDevice.name = device.getName();
 			bleDevice.address = device.getAddress();
+			bleDevice.rssi = rssi + "";
 			bleDevice.isConnected = false;
 			Intent intent = new Intent(BTConstants.ACTION_BLE_DEVICES_DATA);
 			intent.putExtra("device", bleDevice);
