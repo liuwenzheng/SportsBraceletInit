@@ -129,9 +129,9 @@ public class BTModule {
 	 * 
 	 */
 	public static void getSNData(BluetoothGatt mBluetoothGatt) {
-		byte[] byteArray = new byte[1];
-		byteArray[0] = BTConstants.HEADER_GETSN;
-		// byteArray[1] = 0x04;
+		byte[] byteArray = new byte[2];
+		byteArray[0] = BTConstants.HEADER_GETDATA;
+		byteArray[1] = 0x04;
 		writeCharacteristicData(mBluetoothGatt, byteArray);
 	}
 

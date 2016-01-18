@@ -122,6 +122,7 @@ public class InitActivity extends Activity implements OnClickListener,
 			devices.clear();
 			mPosition = -1;
 			mSelectDevice = null;
+			mBtService.disConnectBle();
 			LogModule.d("开始扫描...");
 			mBtService.scanDevice();
 			mDialog = ProgressDialog.show(InitActivity.this, null,
@@ -137,6 +138,7 @@ public class InitActivity extends Activity implements OnClickListener,
 			devices.clear();
 			mPosition = -1;
 			mSelectDevice = null;
+			mBtService.disConnectBle();
 			tv_device_size.setText(getString(R.string.device_size,
 					devices.size()));
 			mAdapter.notifyDataSetChanged();
