@@ -11,7 +11,7 @@ import android.util.Log;
  */
 public class LogModule {
 	// tag
-	public static String TAG = "sportsbracelet";
+	public static String TAG = "sportsbraceletInit";
 
 	public static boolean debug = true;
 

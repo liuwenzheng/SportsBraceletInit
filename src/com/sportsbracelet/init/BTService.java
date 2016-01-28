@@ -45,10 +45,6 @@ public class BTService extends Service implements LeScanCallback {
 		return mBinder;
 	}
 
-	public void setmIsStartScan(boolean mIsStartScan) {
-		this.mIsStartScan = mIsStartScan;
-	}
-
 	/**
 	 * 搜索手环
 	 */

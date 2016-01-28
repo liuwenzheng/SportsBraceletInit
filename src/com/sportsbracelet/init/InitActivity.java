@@ -63,6 +63,18 @@ public class InitActivity extends Activity implements OnClickListener,
 		bindService(new Intent(this, BTService.class), mServiceConnection,
 				BIND_AUTO_CREATE);
 		isDeviceConnected();
+		// 注册广播接收器
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(BTConstants.ACTION_BLE_DEVICES_DATA);
+		filter.addAction(BTConstants.ACTION_BLE_DEVICES_DATA_END);
+		filter.addAction(BTConstants.ACTION_CONN_STATUS_TIMEOUT);
+		filter.addAction(BTConstants.ACTION_CONN_STATUS_DISCONNECTED);
+		filter.addAction(BTConstants.ACTION_DISCOVER_SUCCESS);
+		filter.addAction(BTConstants.ACTION_DISCOVER_FAILURE);
+		filter.addAction(BTConstants.ACTION_REFRESH_DATA);
+		filter.addAction(BTConstants.ACTION_ACK);
+		filter.addAction(BTConstants.ACTION_REFRESH_SN);
+		registerReceiver(mReceiver, filter);
 	}
 
 	private void isDeviceConnected() {
@@ -78,31 +90,9 @@ public class InitActivity extends Activity implements OnClickListener,
 	}
 
 	@Override
-	protected void onResume() {
-		// 注册广播接收器
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(BTConstants.ACTION_BLE_DEVICES_DATA);
-		filter.addAction(BTConstants.ACTION_BLE_DEVICES_DATA_END);
-		filter.addAction(BTConstants.ACTION_CONN_STATUS_TIMEOUT);
-		filter.addAction(BTConstants.ACTION_CONN_STATUS_DISCONNECTED);
-		filter.addAction(BTConstants.ACTION_DISCOVER_SUCCESS);
-		filter.addAction(BTConstants.ACTION_DISCOVER_FAILURE);
-		filter.addAction(BTConstants.ACTION_REFRESH_DATA);
-		filter.addAction(BTConstants.ACTION_ACK);
-		filter.addAction(BTConstants.ACTION_REFRESH_SN);
-		registerReceiver(mReceiver, filter);
-		super.onResume();
-	}
-
-	@Override
-	protected void onPause() {
+	protected void onDestroy() {
 		// 注销广播接收器
 		unregisterReceiver(mReceiver);
-		super.onPause();
-	}
-
-	@Override
-	protected void onDestroy() {
 		mBtService.disConnectBle();
 		unbindService(mServiceConnection);
 		mBtService = null;
@@ -204,6 +194,9 @@ public class InitActivity extends Activity implements OnClickListener,
 							return;
 						}
 					}
+					if (Integer.valueOf(bleDevice.rssi) <= -60) {
+						return;
+					}
 					devices.add(bleDevice);
 					mAdapter.setDevices(devices);
 					tv_device_size.setText(getString(R.string.device_size,
@@ -215,6 +208,9 @@ public class InitActivity extends Activity implements OnClickListener,
 				}
 				if (BTConstants.ACTION_BLE_DEVICES_DATA_END.equals(intent
 						.getAction())) {
+					tv_device_size.setText(getString(R.string.device_size,
+							devices.size()));
+					mAdapter.notifyDataSetChanged();
 					if (mDialog != null) {
 						mDialog.dismiss();
 					}
